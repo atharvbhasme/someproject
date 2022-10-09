@@ -1,43 +1,45 @@
-// C++ program to implement recursive Binary Search
-#include <bits/stdc++.h>
+/*
+Time complexity is -> O(log n)
+Space complexity is > O(n)
+*/
+//This program just given an output element present or not in an array
+#include <iostream>
 using namespace std;
-
-// A recursive binary search function. It returns
-// location of x in given array arr[l..r] is present,
-// otherwise -1
-int binarySearch(int arr[], int l, int r, int x)
-{
-	if (r >= l) {
-		int mid = l + (r - l) / 2;
-
-		// If the element is present at the middle
-		// itself
-		if (arr[mid] == x)
-			return mid;
-
-		// If element is smaller than mid, then
-		// it can only be present in left subarray
-		if (arr[mid] > x)
-			return binarySearch(arr, l, mid - 1, x);
-
-		// Else the element can only be present
-		// in right subarray
-		return binarySearch(arr, mid + 1, r, x);
-	}
-
-	// We reach here when element is not
-	// present in array
-	return -1;
+bool isBinarysearch(int arr[], int size, int key){
+    int s = 0, e = size - 1, mid = s + (e-s)/2;
+    while(s <= e){
+        if(arr[mid]==key){
+            return 1;
+        }
+        else if(arr[mid] < key){
+            s = mid + 1;
+        }
+        else{
+            e = mid - 1;
+        }
+        mid = s + (e-s)/2;
+    }
+    return 0;
 }
 
-int main(void)
+int main()
 {
-	int arr[] = { 2, 3, 4, 10, 40 };
-	int x = 10;
-	int n = sizeof(arr) / sizeof(arr[0]);
-	int result = binarySearch(arr, 0, n - 1, x);
-	(result == -1)
-		? cout << "Element is not present in array"
-		: cout << "Element is present at index " << result;
-	return 0;
+    int n;
+    cout << "Enter the size of an array -> ";
+    cin >> n;
+    int arr[n];
+    cout <<"Enter elements in an array -> ";
+    for(int i = 0; i < n; i++){
+        cin >> arr[i]; 
+    }
+    cout << "Enter number would you like to search -> ";
+    int key;
+    cin >> key;
+    if(isBinarysearch(arr, n, key)){
+        cout << "The values " << key << " was found in given an array" << endl;
+    }
+    else{
+        cout << "The values " << key << " was not found in given an array" << endl;
+    }
+    return 0;
 }
